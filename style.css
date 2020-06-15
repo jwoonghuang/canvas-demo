@@ -8,6 +8,12 @@
 }*/
 
 #draw{
-    background: yellowgreen;
+    background: black;
     display: block;
+}
+
+#eraser{
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }

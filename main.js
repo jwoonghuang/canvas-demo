@@ -40,25 +40,29 @@ var ctx = yyy.getContext('2d');
 
 getwindowSize();
 
-window.onresize(){
-    getwindowSize();  
-}
+window.onresize = function () {
+    getwindowSize();
+};
 function getwindowSize() {   //获取用户窗口尺寸
     var pageWidth = document.documentElement.clientWidth;
     var pageHeight = document.documentElement.clientHeight;
     yyy.width = pageWidth;
     yyy.height = pageHeight;
 }
+/*********/
 
 function drawCircle(x,y,radius){
     ctx.beginPath();
+    ctx.fillStyle = '#512e47';
     ctx.arc(x,y,radius,0,Math.PI*2);
     ctx.fill();
 }
 
 function drawLine(x1,y1,x2,y2){
+
     ctx.beginPath();
     ctx.lineWidth = 10;
+    ctx.strokeStyle = '#512e47'
     ctx.moveTo(x1,y1);
     ctx.lineTo(x2,y2);
     ctx.stroke();
@@ -67,31 +71,47 @@ function drawLine(x1,y1,x2,y2){
 
 
 
-var painting = false;
+var using = false;
 var lastPoint = {x:undefined,y:undefined};
 
 yyy.onmousedown = function(aaa){
-    painting = true;
     var x = aaa.clientX;
     var y = aaa.clientY;
-    lastPoint = {x:x,y:y};
-    drawCircle(x,y,5);
-    drawLine(x,y)
+   if (eraserEnabled){
+       using = true;
+       ctx.clearRect(x-20,y-20,40,40);
+   }else{
+       using = true;
+       lastPoint = {x:x,y:y};
+   }
 }
 
 yyy.onmousemove = function(aaa){
-    if (painting){
-        var x = aaa.clientX;
-        var y = aaa.clientY;
-        var newPoint = {x:x,y:y};
-        drawCircle(x,y,5);
-        drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
-        lastPoint = newPoint;
+    var x = aaa.clientX;
+    var y = aaa.clientY;
+    if (eraserEnabled){
+        if (using){
+            ctx.clearRect(x-20,y-20,40,40);
+        }
     }else{
+        if (using){
+            var newPoint = {x:x,y:y};
+            drawCircle(x,y,5);
+            drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
+            lastPoint = newPoint;
+        }else{
 
+        }
     }
 }
 
 yyy.onmouseup = function(aaa){
-    painting = false;
+    using = false;
+}
+
+/*********************/
+
+var eraserEnabled = false;
+eraser.onclick = function () {
+    eraserEnabled = !eraserEnabled;
 }
