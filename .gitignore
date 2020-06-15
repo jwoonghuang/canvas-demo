@@ -1,2 +1,5 @@
 # .idea文件夹
 /.idea/
+
+# .gitignore文件
+/.gitignore
