@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+}
+/*#canvas{
+    background: #798391;
+    height: 100vh;
+    position: relative;
+}*/
+
+#draw{
+    background: yellowgreen;
+    display: block;
+}
