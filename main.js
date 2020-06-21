@@ -47,7 +47,12 @@ listenToMouse(yyy)
 
 var eraserEnabled = false;
 eraser.onclick = function () {
-    eraserEnabled = !eraserEnabled;
+    eraserEnabled = true;
+    actions.className = 'actions x'
+}
+brush.onclick = function () {
+    eraserEnabled = false;
+    actions.className = 'actions'
 }
 
 /********/
