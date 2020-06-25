@@ -40,7 +40,7 @@ var ctx = yyy.getContext('2d');
 
 autosetCanvasSize(yyy)
 
-listenToMouse(yyy)
+listenToUser(yyy)
 
 /*********/
 
@@ -89,36 +89,70 @@ function drawLine(x1,y1,x2,y2){
     ctx.closePath();
 }
 
-function listenToMouse(canvas) {
+
+
+function listenToUser(canvas) {
     var using = false;
     var lastPoint = {x:undefined,y:undefined};
 
-    canvas.onmousedown = function(aaa){
-        var x = aaa.clientX;
-        var y = aaa.clientY;
-        using = true;
-        if (eraserEnabled){
-            ctx.clearRect(x-20,y-20,40,40);
-        }else{
-            lastPoint = {x:x,y:y};
-        }
-    }
-
-    canvas.onmousemove = function(aaa){
-        var x = aaa.clientX;
-        var y = aaa.clientY;
-        if(!using){return}
-        if (eraserEnabled){
-            ctx.clearRect(x-20,y-20,40,40);
-        }else{
-            var newPoint = {x:x,y:y};
-            drawCircle(x,y,5);
-            drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
-            lastPoint = newPoint;
+    //特性检测
+    if (document.body.ontouchstart !== undefined) {
+        //触屏设备
+        canvas.ontouchstart = function (bbb) {
+            var x = bbb.touches[0].clientX
+            var y = bbb.touches[0].clientY
+            using = true
+            if (eraserEnabled){
+                ctx.clearRect(x-20,y-20,40,40)
+            }else{
+                lastPoint = {x:x,y:y}
             }
-    }
+        }
+        canvas.ontouchmove = function (bbb) {
+            var x = bbb.touches[0].clientX
+            var y = bbb.touches[0].clientY
+            if(!using){return}
+            if (eraserEnabled){
+                ctx.clearRect(x-20,y-20,40,40);
+            }else{
+                var newPoint = {x:x,y:y};
+                drawCircle(x,y,5);
+                drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
+                lastPoint = newPoint;
+            }
+        }
+        canvas.ontouchend = function (bbb) {
+            using = false
+        }
+    }else{
+        //非触屏设备
+        canvas.onmousedown = function(aaa){
+            var x = aaa.clientX
+            var y = aaa.clientY
+            using = true
+            if (eraserEnabled){
+                ctx.clearRect(x-20,y-20,40,40)
+            }else{
+                lastPoint = {x:x,y:y}
+            }
+        }
 
-    canvas.onmouseup = function(aaa){
-        using = false;
+        canvas.onmousemove = function(aaa){
+            var x = aaa.clientX;
+            var y = aaa.clientY;
+            if(!using){return}
+            if (eraserEnabled){
+                ctx.clearRect(x-20,y-20,40,40);
+            }else{
+                var newPoint = {x:x,y:y};
+                drawCircle(x,y,5);
+                drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
+                lastPoint = newPoint;
+            }
+        }
+
+        canvas.onmouseup = function(aaa){
+            using = false;
+        }
     }
 }
