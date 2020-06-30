@@ -38,6 +38,7 @@ div.onmouseup = function (a) {
 var yyy = document.getElementById('draw');
 var ctx = yyy.getContext('2d');
 var lineWidth = 3
+var circleRadius = 1.5
 
 autosetCanvasSize(yyy)
 
@@ -57,7 +58,18 @@ eraser.onclick = function () {
     eraser.classList.add('active')
     pencil.classList.remove('active')
 }
-
+clear.onclick = function () {
+    ctx.clearRect(0, 0, yyy.width, yyy.height)
+}
+save.onclick = function () {
+    var url = yyy.toDataURL("image/png")
+    var a = document.createElement('a')
+    document.body.appendChild(a)
+    a.href = url
+    a.download = 'new png'
+    a.target = '_blank'
+    a.click()
+}
 black.onclick = function () {
     ctx.fillStyle = 'black'
     ctx.strokeStyle = 'black'
@@ -94,8 +106,26 @@ yellow.onclick = function () {
 
 thin.onclick = function () {
     lineWidth = 3
-
+    circleRadius = 1.5
+    thin.classList.add('active')
+    middle.classList.remove('active')
+    thick.classList.remove('active')
 }
+middle.onclick = function () {
+    lineWidth = 6
+    circleRadius = 3
+    thin.classList.remove('active')
+    middle.classList.add('active')
+    thick.classList.remove('active')
+}
+thick.onclick = function () {
+    lineWidth = 9
+    circleRadius = 4.5
+    thin.classList.remove('active')
+    middle.classList.remove('active')
+    thick.classList.add('active')
+}
+
 
 /********/
 
@@ -122,7 +152,7 @@ function drawCircle(x,y,radius){
 function drawLine(x1,y1,x2,y2){
 
     ctx.beginPath();
-    ctx.lineWidth = 5;
+    ctx.lineWidth = lineWidth;
     ctx.moveTo(x1,y1);
     ctx.lineTo(x2,y2);
     ctx.stroke();
@@ -156,7 +186,7 @@ function listenToUser(canvas) {
                 ctx.clearRect(x-20,y-20,40,40);
             }else{
                 var newPoint = {x:x,y:y};
-                drawCircle(x,y,2.5);
+                drawCircle(x,y,circleRadius);
                 drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
                 lastPoint = newPoint;
             }
@@ -185,7 +215,7 @@ function listenToUser(canvas) {
                 ctx.clearRect(x-20,y-20,40,40);
             }else{
                 var newPoint = {x:x,y:y};
-                drawCircle(x,y,2.5);
+                drawCircle(x,y,circleRadius);
                 drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
                 lastPoint = newPoint;
             }

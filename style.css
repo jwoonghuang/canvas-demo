@@ -10,7 +10,9 @@ ol,ul{
     height: 100vh;
     position: relative;
 }*/
-
+body{
+    overflow: hidden;
+}
 .icon {
     width: 1em; height: 1em;
     vertical-align: -0.15em;
@@ -64,7 +66,7 @@ ol,ul{
 .colors > li.yellow{
     background: yellow;
 }
-.colors >li.active{
+ol >li.active{
     box-shadow: 0 0 3px rgba(0,0,0,0.95);
     transform: scale(1.2);
 }
