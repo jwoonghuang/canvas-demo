@@ -9,8 +9,25 @@
 <div id="canvas"></div>
 <canvas id = "draw" width = '500' height = '500'></canvas>
 <div id = "actions" class = "actions">
-    <button id = "eraser">橡皮檫</button>
-    <button id = "brush">画笔</button>
+    <svg id = 'pencil' class="active icon">
+        <use xlink:href="#icon-Pencil"></use>
+    </svg>
+    <svg id = 'eraser' class="icon">
+        <use xlink:href="#icon-Eraser-Tool"></use>
+    </svg>
 </div>
+<ol class="colors">
+    <li id = 'black' class = 'black active'></li>
+    <li id = 'red' class="red"></liid>
+    <li id = 'green' class="green"></li>
+    <li id = 'yellow' class="yellow"></li>
+</ol>
+<ol class="lineWidth">
+    <li id = 'thin' class='thin'></liid>
+    <li id = 'middle' class='middle'></li>
+    <li id = 'thick' class='thick'></li>
+</ol>
 <script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="//at.alicdn.com/t/font_1905825_c2p3t20cf8n.js"></script>
+</html>
 </html>

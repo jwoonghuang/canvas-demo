@@ -37,6 +37,7 @@ div.onmouseup = function (a) {
 
 var yyy = document.getElementById('draw');
 var ctx = yyy.getContext('2d');
+var lineWidth = 3
 
 autosetCanvasSize(yyy)
 
@@ -46,13 +47,54 @@ listenToUser(yyy)
 
 
 var eraserEnabled = false;
-eraser.onclick = function () {
-    eraserEnabled = true;
-    actions.className = 'actions x'
+pencil.onclick = function () {
+    eraserEnabled = false
+    pencil.classList.add('active')
+    eraser.classList.remove('active')
 }
-brush.onclick = function () {
-    eraserEnabled = false;
-    actions.className = 'actions'
+eraser.onclick = function () {
+    eraserEnabled = true
+    eraser.classList.add('active')
+    pencil.classList.remove('active')
+}
+
+black.onclick = function () {
+    ctx.fillStyle = 'black'
+    ctx.strokeStyle = 'black'
+    black.classList.add('active')
+    red.classList.remove('active')
+    green.classList.remove('active')
+    yellow.classList.remove('active')
+}
+red.onclick = function () {
+    ctx.fillStyle = 'red'
+    ctx.strokeStyle = 'red'
+    black.classList.remove('active')
+    red.classList.add('active')
+    green.classList.remove('active')
+    yellow.classList.remove('active')
+}
+green.onclick = function () {
+    ctx.fillStyle = 'green'
+    ctx.strokeStyle = 'green'
+    black.classList.remove('active')
+    red.classList.remove('active')
+    green.classList.add('active')
+    yellow.classList.remove('active')
+}
+yellow.onclick = function () {
+    ctx.fillStyle = 'yellow'
+    ctx.strokeStyle = 'yellow'
+    black.classList.remove('active')
+    red.classList.remove('active')
+    green.classList.remove('active')
+    yellow.classList.add('active')
+
+}
+
+thin.onclick = function () {
+    lineWidth = 3
+
 }
 
 /********/
@@ -73,7 +115,6 @@ function autosetCanvasSize(canvas) {
 
 function drawCircle(x,y,radius){
     ctx.beginPath();
-    ctx.fillStyle = '#512e47';
     ctx.arc(x,y,radius,0,Math.PI*2);
     ctx.fill();
 }
@@ -81,8 +122,7 @@ function drawCircle(x,y,radius){
 function drawLine(x1,y1,x2,y2){
 
     ctx.beginPath();
-    ctx.lineWidth = 10;
-    ctx.strokeStyle = '#512e47'
+    ctx.lineWidth = 5;
     ctx.moveTo(x1,y1);
     ctx.lineTo(x2,y2);
     ctx.stroke();
@@ -116,7 +156,7 @@ function listenToUser(canvas) {
                 ctx.clearRect(x-20,y-20,40,40);
             }else{
                 var newPoint = {x:x,y:y};
-                drawCircle(x,y,5);
+                drawCircle(x,y,2.5);
                 drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
                 lastPoint = newPoint;
             }
@@ -145,7 +185,7 @@ function listenToUser(canvas) {
                 ctx.clearRect(x-20,y-20,40,40);
             }else{
                 var newPoint = {x:x,y:y};
-                drawCircle(x,y,5);
+                drawCircle(x,y,2.5);
                 drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
                 lastPoint = newPoint;
             }
