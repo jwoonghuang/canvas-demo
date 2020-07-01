@@ -5,11 +5,7 @@
 ol,ul{
     list-style: none;
 }
-/*#canvas{
-    background: #798391;
-    height: 100vh;
-    position: relative;
-}*/
+
 body{
     overflow: hidden;
 }
@@ -23,6 +19,9 @@ body{
 #draw{
     background: #799e96;
     display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .actions{
